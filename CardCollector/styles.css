@@ -1,0 +1,93 @@
+/*body of whole program*/
+body{
+	background: white;
+}
+
+/*Title of Website*/
+h1{
+	text-align:center;
+}
+
+/*moving Tabs to center of web page */
+body ul {
+	text-align: center;
+}
+
+/*sign up and login buttons*/
+.register {
+	float: right;
+}
+
+/*puts Tabs on the same line*/
+body ul li{
+	background:lightgrey;
+	display:inline;
+	margin-right: 1%;
+}
+
+/*Removes underline from links*/
+a{
+	text-decoration: none;
+}
+
+
+/*editing Tabs colors and styles*/
+.tab_btn {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/*gives color to tab when hovering over it*/
+.tab_btn:hover {
+    background-color: #ddd;
+}
+
+/*gives color to tab when tab is active*/
+.tab_btn.active {
+    background-color: #666;
+    color: white;
+}
+
+/*Puts a line seperating header from cards*/
+body nav{
+	border-bottom: solid;
+}
+
+
+/*aligning cards to middle and trying to put a space between them*/
+body div{
+	padding: 2%;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+
+
+/*aligns buttons for deck chooser to center*/
+#btns {
+	text-align: center
+}
+
+/*adds  styles and colors to deck chooser buttons*/
+.btn {
+    border: none;
+    outline: none;
+    padding: 10px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/*adds color when hovering over deck chooser button*/
+.btn:hover {
+    background-color: #ddd;
+}
+
+/*adds color to deck chooser button that is active*/
+.btn.active {
+    background-color: #666;
+    color: white;
+}

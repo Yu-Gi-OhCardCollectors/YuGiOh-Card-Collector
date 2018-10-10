@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+	<header>
+        <title>Yugioh CardCollector</title>
+        <link rel = "stylesheet" type = "text/css" href = "styles.css"/>
+    </header>
+
+    <body>
+        <header>
+            <h1>Welcome to Yugioh Card Collection</h1>
+        	<nav>
+                <!-- Tab buttons to choose what page you are on -->
+        		<ul>
+        			<li><button class = "tab_btn"><a href="index.html">All Cards</a></button></li>
+        			<li><button class = "tab_btn"><a href="trunk.html"> My Trunk </a></button></li>
+        			<li><button class = "tab_btn active"> My Decks </li>
+                    <li><button class = "tab_btn"><a href="desired.html"> Desired Cards </a></button></li>
+                    <li class = "register">Login</li>
+                    <li class = "register">SignUp</li>
+        		</ul>
+        	</nav>
+        </header>
+
+        <!--Buttons to cycle through decks-->
+        <div id = "btns">
+            <button class="btn active" onclick="one()">1</button>
+            <button class="btn" onclick="two()">2</button>
+            <button class="btn" onclick="three()">3</button>
+        </div>
+        
+        <!--Will display card images-->
+        <div class="cardImages">
+            
+        </div>
+
+        <script type="text/javascript" src="main.js"></script>
+    </body>
+</html>
