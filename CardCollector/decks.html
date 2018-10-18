@@ -11,10 +11,11 @@
         	<nav>
                 <!-- Tab buttons to choose what page you are on -->
         		<ul>
-        			<li><button class = "tab_btn"><a href="index.html">All Cards</a></button></li>
-        			<li><button class = "tab_btn"><a href="trunk.html"> My Trunk </a></button></li>
-        			<li><button class = "tab_btn active"> My Decks </li>
-                    <li><button class = "tab_btn"><a href="desired.html"> Desired Cards </a></button></li>
+        			<li><a href="index.html"> <button class = "tab_btn">All Cards</button></a></li>
+        			<li><a href="trunk.html"> <button class = "tab_btn">My Trunk</button></a></li>
+        			<li>                      <button class = "tab_btn active">My Decks</button></li>
+                    <li><a href="desired.html"><button class = "tab_btn">Desired Cards</button></a></li>
+
                     <li class = "register"><button>Login</button></li>
                     <li class = "register"><button>SignUp</button></li>
         		</ul>
@@ -23,16 +24,16 @@
 
         <!--Buttons to cycle through decks-->
         <div id = "btns">
-            <button class="btn active">1</button>
-            <button class="btn"><a href="deck2.html">2</a></button>
-            <button class="btn"><a href="deck3.html">3</a></button>
+            <button class="btn" onclick="one()">1 </button>
+            <button class="btn" onclick="two()">2</button>
+            <button class="btn" onclick="three()">3</button>
         </div>
         
         <!--Will display card images-->
-        <div class="cardImages">
+        <div id="cardImages">
             
         </div>
 
-        <script type="text/javascript" src="main.js"></script>
+        <script type="text/javascript" src="decks.js"></script>
     </body>
 </html>

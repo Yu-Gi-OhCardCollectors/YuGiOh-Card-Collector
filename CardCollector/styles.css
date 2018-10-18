@@ -1,6 +1,6 @@
 /*body of whole program*/
 body{
-	background: white;
+	background: lightpink;
 }
 
 
@@ -88,7 +88,7 @@ body div{
 }
 
 /*adds color to deck chooser button that is active*/
-.btn.active {
+.btn.activeD {
     background-color: #666;
     color: white;
 }
