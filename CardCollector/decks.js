@@ -11,10 +11,10 @@ function placeImages(deck){
 
 //delete the images so that the website will print out the correct deck
 function deleteImages(){
-	var div = document.getElementById("cardImages");
-	var img = div.getElementsByClassName("cardImg");
+	var div = document.getElementById("cardImages"); //div where card images are being printed
+	var img = div.getElementsByClassName("cardImg"); //put all images in a list
 	for(var i = 0; i < img.length; ++i){
-		div.removeChild(div.childNodes[i]);
+		div.removeChild(div.childNodes[i]);			//delete images from div
 	}
 }
 
