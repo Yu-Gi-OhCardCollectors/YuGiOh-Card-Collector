@@ -81,7 +81,8 @@ body nav{
 
 /*aligns buttons for deck chooser to center*/
 #btns {
-	text-align: center
+	text-align: center;
+    padding: 2%;
 }
 
 /*adds  styles and colors to deck chooser buttons*/
@@ -116,6 +117,21 @@ body nav{
 
 
 
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
 
 
 * {box-sizing: border-box;}
