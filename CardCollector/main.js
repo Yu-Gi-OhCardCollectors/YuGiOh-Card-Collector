@@ -1,16 +1,20 @@
-//Places Card Images
-function placeImages(){   
-	for(var i = 0; i < 5; ++i){
-		var cardImage = document.createElement('IMG');			//creates <img> tag in html
-		cardImage.setAttribute('src', 'images/card'+i+'.jpg');  //image path
-		cardImage.setAttribute('width', '150');
-		document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
-	}
-}
-placeImages();
+//place card images using json file
+var xmlhttp = new XMLHttpRequest();
+xmlhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        var myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
+        for(var i = 0; i < 8000; ++i){
+			var cardImage = document.createElement('IMG');			//creates <img> tag in html
+			cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+			cardImage.setAttribute('width', '150');
+			document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
+		}
+    }
+};
+xmlhttp.open("GET", "cards.json", true);
+xmlhttp.send();
 
-
-
+//for sign up pop up
 var modal = document.getElementById('id01');
 window.onclick = function(event){
 	if (event.target == modal) {
@@ -18,6 +22,7 @@ window.onclick = function(event){
 	}
 }
 
+//for login pop up
 var modal = document.getElementById('id02');
 window.onclick = function(event){
 	if (event.target == modal) {
