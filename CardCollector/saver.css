@@ -1,0 +1,35 @@
+/*body of whole program*/
+body{
+	background: lightpink;
+}
+
+h1 {
+	text-align: center;
+}
+
+/*Puts a line seperating header from cards*/
+body div{
+	border-bottom: solid;
+	padding-bottom: 0%;
+}
+
+
+ul {
+	text-align: center;
+}
+
+li {
+	padding-left: 50%;
+	margin-bottom: 2%;
+	list-style-type: none;
+}
+
+button  {
+	border: none;
+    outline: none;
+    width: 100%;
+    padding: 10px 16px;
+    background-color: #f1f1f1;
+    cursor: pointer;
+    font-size: 18px;
+}
