@@ -9,16 +9,19 @@ h1 {
 
 /*Puts a line seperating header from cards*/
 body div{
-	border-bottom: solid;
-	padding-bottom: 0%;
+	//border-bottom: solid;
+	//padding-bottom: 0%;
 }
 
+.card-btn{
+	display: inline;
+}
 
-ul {
+.decide {
 	text-align: center;
 }
 
-li {
+.decide li {
 	padding-left: 50%;
 	margin-bottom: 2%;
 	list-style-type: none;
