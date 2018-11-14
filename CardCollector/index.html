@@ -23,6 +23,19 @@
 	    	</nav>
     	</head>
 
+        <!-- Pop Up screen for cards -->
+        <div id="cardImages" class="modal">
+            <span onclick="document.getElementById('cardImages').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <form class="modal-content animate" action="/action_page.php" onsubmit="return userInfoCheck()">
+                <div class="container">
+                    <button class = "tab_btn active">Add To All Cards</button></li>
+                    <li><button class = "tab_btn">Add To My Trunk</button></a></li>
+                    <li><button class = "tab_btn">Add To My Decks </button></a></li>
+                    <li><button class = "tab_btn">Add To Desired Cards </button></a></li>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <!-- Pop Up sign up screen -->
         <div id="id01" class="modal">
