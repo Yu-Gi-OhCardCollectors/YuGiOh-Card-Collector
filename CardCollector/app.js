@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoader", event => {
 
 
 function googleLogin(){
-    alert("hello world");
+    //alert("hello world");
+    //commenting out the alert.
     const provider = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithPopup(provider) //this is what actually signs people in
