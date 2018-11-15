@@ -23,8 +23,8 @@ function googleLogin(){
                 
                 document.getElementById('register').appendChild(profImg);
                 //document.write(`Hello ${user.displayName}`);
-                console.log(user)
+                console.log(user);
             } )
-            .catch(console.log)
+            .catch(console.log);
 }
 
