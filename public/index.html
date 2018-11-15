@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/5.5.7/firebase-app.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <script defer src="/__/firebase/5.5.7/firebase-auth.js"></script>
+    <script defer src="/__/firebase/5.5.7/firebase-database.js"></script>
+    <script defer src="/__/firebase/5.5.7/firebase-messaging.js"></script>
+    <script defer src="/__/firebase/5.5.7/firebase-storage.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+        <title>Yugioh CardCollector</title>
+        <link rel = "stylesheet" type = "text/css" href = "styles.css"/>
+  </head>
+
+  <body>
+        <h1 id="welcome">Welcome to YuGiOh Card Collector</h1>
+    <nav>
+      <!-- Tab buttons to choose what page you are on -->
+      <ul>
+        <li>                       <button class = "tab_btn active">All Cards</button></li>
+                <li><a href="trunk.html">  <button class = "tab_btn">My Trunk</button></a></li>
+                <li><a href="decks.html">  <button class = "tab_btn">My Decks </button></a></li>
+                <li><a href="desired.html"><button class = "tab_btn">Desired Cards </button></a></li>
+
+                                                <!--Google login from friebase-->
+          <li class = "register"><button onclick="googleLogin()".style.display='block'">SignUp</button></li> 
+                <li class = "register"><button onclick="document.getElementById('id02').style.display='block'">Login</button></li>
+      </ul>
+    </nav>
+  </head>
+
+
+     <!-- Pop Up login screen -->
+    <div id="id02" class="modal">
+        <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+          <div class="modal-content animate"> <!--action="/action_page.php">-->
+              <div class="container">
+                  <img id="card-select" src="images/card0.jpg" height=440px>
+
+                  <div class="decide">
+                      <li><button>Add to Trunk</button></li>
+                      <li><button>Add to Deck 1</button></li>
+                      <li><button>Add to Deck 2</button></li>
+                      <li><button>Add to Deck 3</button></li>
+                      <li><button>Add to Desired Cards</button></li>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+  <!--Will display Card Images -->
+  <div id="cardImages"> 
+  </div>
+
+
+
+  
+    
+  <script src="main.js"></script>
+  <script src="app.js"></script>
+ 
+  </body>
+</html
