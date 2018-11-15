@@ -15,7 +15,13 @@ function googleLogin(){
             .then(result => {                               //this displays hello to the user who just signed in
                 const user = result.user;
                 document.getElementById('welcome').innerHTML = `Welcome ${user.displayName}`;
-                document.getElementById('register').innerHTML = 'Signout';
+                document.getElementById('register').removeChild(document.getElementById('loginBut'));
+                var profImg = document.createElement('IMG');
+                profImg.setAttribute('src', "sp.jpg");
+                profImg.setAttribute('width', 50);
+                profImg.setAttribute('height', 50);
+                
+                document.getElementById('register').appendChild(profImg);
                 //document.write(`Hello ${user.displayName}`);
                 console.log(user)
             } )
