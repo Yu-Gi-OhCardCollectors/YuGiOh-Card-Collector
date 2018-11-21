@@ -10,21 +10,30 @@ function googleLogin(){
     const provider = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithPopup(provider) //this is what actually signs people in 
-            //const user = result.user;
-            //document.getElementById('welcome').innerHTML = "welcome "+${user.displayName};
+            
             .then(result => {                               //this displays hello to the user who just signed in
                 const user = result.user;
                 document.getElementById('welcome').innerHTML = `Welcome ${user.displayName}`;
-                document.getElementById('register').removeChild(document.getElementById('loginBut'));
-                var profImg = document.createElement('IMG');
-                profImg.setAttribute('src', "sp.jpg");
-                profImg.setAttribute('width', 50);
-                profImg.setAttribute('height', 50);
-                
-                document.getElementById('register').appendChild(profImg);
-                //document.write(`Hello ${user.displayName}`);
-                console.log(user);
+                document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
+                document.getElementById('loginBut').setAttribute('onclick', 'googleLogout()');  //On a click of the log out button it will call
+                                                                                                //the googleLogout function
+                console.log(user)
             } )
-            .catch(console.log);
+            .catch(console.log)
 }
 
+
+function googleLogout(){
+    alert("Sign out");  //an alert to let us know the function was called
+
+    firebase.auth().signOut().then(function() { //signs user out
+        // Sign-out successful.
+
+        document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector`;  //After log out it will display OG greeting
+        document.getElementById('loginBut').innerHTML = "Log in with google";               //Changes the button back to user login
+        document.getElementById('loginBut').setAttribute('onclick', 'googleLogin()');       //On a click of the button calls googleLogin function
+        
+      }).catch(function(error) {
+        // An error happened.
+      });
+}
