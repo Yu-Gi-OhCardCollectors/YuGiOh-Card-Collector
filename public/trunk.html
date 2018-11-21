@@ -7,7 +7,7 @@
 
     <body>
         <head>
-            <h1>Welcome to Yugioh Card Collection</h1>
+            <h1 id="welcome">Welcome to YuGiOh Card Collector</h1>
         	<nav>
         		<!-- Tab buttons to choose what page you are on -->
                 <ul>
@@ -16,17 +16,17 @@
                     <li><a href="decks.html">  <button class = "tab_btn">My Decks </button></a></li>
                     <li><a href="desired.html"><button class = "tab_btn">Desired Cards </button></a></li>
 
-                    <li class = "register"><button>Login</button></li>
-                    <li class = "register"><button>SignUp</button></li>
+                    <!--Google login from friebase-->
+                    <li id = "login" class = "register"><button id = "loginBut" onclick="googleLogin()".style.display='block'">Login With Google</button></li>
+                    <li id = "logout" class = "register"><button id = "logoutBut" onclick="googleLogout()".style.display='block'">Logout</button></li> 
         		</ul>
 
         	</nav>
         </head>
 
-        <!--Will display Card Images-->
-        <div id="cardImages">
-            
-        </div>
+        <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+        <script src="main.js"></script>
+        <script src="app.js"></script>
 
         <script type="text/javascript" src="trunk.js"></script>
     </body>
