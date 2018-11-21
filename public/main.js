@@ -15,25 +15,16 @@ xmlhttp.onreadystatechange = function() {
 xmlhttp.open("GET", "cards.json", true);
 xmlhttp.send();
 
+//intiate card pop up form with card image
 function cardDecide(image, i){
 		document.getElementById('id02').style.display = 'block';
 		document.getElementById('card-select').setAttribute('src', image);
 }
 
-
-//for sign up pop up
-var modal = document.getElementById('id01');
-window.onclick = function(event){
-	if (event.target == modal) {
-		modal.style.display = "none";
-	}
-}
-
-//for login pop up
+//for card image pop up
 var modal = document.getElementById('id02');
 window.onclick = function(event){
 	if (event.target == modal) {
 		modal.style.display = "none";
 	}
 }
-
