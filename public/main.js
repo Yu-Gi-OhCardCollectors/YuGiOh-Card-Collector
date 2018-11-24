@@ -7,7 +7,7 @@ xmlhttp.onreadystatechange = function() {
 			var cardImage = document.createElement('IMG');			//creates <img> tag in html
 			cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
 			cardImage.setAttribute('width', '150');
-			cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+')');	//onclick function on the image
+			cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
 			document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
 		}
     }
@@ -15,9 +15,12 @@ xmlhttp.onreadystatechange = function() {
 xmlhttp.open("GET", "cards.json", true);
 xmlhttp.send();
 
-function cardDecide(image, i){
+function cardDecide(image, i, title, des){
 		document.getElementById('id02').style.display = 'block';
 		document.getElementById('card-select').setAttribute('src', image);
+		document.getElementById('nameOfCard').innerHTML = title;
+		document.getElementById('desOfCard').innerHTML = des;
+		
 }
 
 
@@ -34,6 +37,7 @@ var modal = document.getElementById('id02');
 window.onclick = function(event){
 	if (event.target == modal) {
 		modal.style.display = "none";
+		
 	}
 }
 
