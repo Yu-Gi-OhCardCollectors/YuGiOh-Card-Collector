@@ -18,9 +18,14 @@ xmlhttp.send();
 function cardDecide(image, i, title, des){
 		document.getElementById('id02').style.display = 'block';
 		document.getElementById('card-select').setAttribute('src', image);
+		document.getElementById('card-select').setAttribute('index', i); //creates attribute index
 		document.getElementById('nameOfCard').innerHTML = title;
 		document.getElementById('desOfCard').innerHTML = des;
 		
+}
+
+function GetCardIndex(){
+	alert(document.getElementById('card-select').getAttribute('index')); //returns card index in an alert, could use this for Austins database idea
 }
 
 
