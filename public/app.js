@@ -1,3 +1,52 @@
+// Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDsqPozRkTAsj0sR4uZjq7TD-v7BclYZCk",
+    authDomain: "firebasics-99944.firebaseapp.com",
+    databaseURL: "https://firebasics-99944.firebaseio.com",
+    projectId: "firebasics-99944",
+    storageBucket: "firebasics-99944.appspot.com",
+    messagingSenderId: "898950176638"
+  };
+
+  firebase.initializeApp(config);
+
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      // User is signed in.
+      document.getElementById('welcome').innerHTML = `Welcome ${user.displayName}`; //Changes header to included users email name
+
+      var user = firebase.auth().currentUser;
+      document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
+      document.getElementById('loginBut').setAttribute('onclick', 'googleLogout()');  //On a click of the log out button it will call
+  
+      if(user != null){
+  
+        var email_id = user.email;
+        //document.getElementById("user_para").innerHTML = "Welcome User : " + email_id;
+  
+      }
+  
+    } else {
+      // No user is signed in.
+      document.getElementById('welcome').innerHTML = "Welcome to YuGiOh Card Collector";  
+    }
+  });
+
+
+
+
+  // Get a reference to the database service
+  //var database = firebase.database();
+  //firebase.database().ref('users/' + userId)
+
+
+
+
+
+
+
+
+
 //javascript that corresponds to the decks.html
 if(window.location.toString().includes("decks.html")){
     //Places Card Images
@@ -86,7 +135,7 @@ else{
                 var cardImage = document.createElement('IMG');          //creates <img> tag in html
                 cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
                 cardImage.setAttribute('width', '150');
-                cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+')');   //onclick function on the image
+                cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
                 document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
             }
         }
@@ -95,9 +144,11 @@ else{
     xmlhttp.send();
 
     //intiate card pop up form with card image
-    function cardDecide(image, i){
+    function cardDecide(image, i, title, des){
             document.getElementById('id02').style.display = 'block';
             document.getElementById('card-select').setAttribute('src', image);
+            document.getElementById('nameOfCard').innerHTML = title;
+            document.getElementById('desOfCard').innerHTML = des;
     }
 
     //for card image pop up
@@ -116,8 +167,23 @@ document.addEventListener("DOMContentLoader", event => {
 });
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function googleLogin(){
-    alert("hello world");
     const provider = new firebase.auth.GoogleAuthProvider();
 
     firebase.auth().signInWithPopup(provider) //this is what actually signs people in 
@@ -135,15 +201,18 @@ function googleLogin(){
 
 
 function googleLogout(){
-    alert("Sign out");  //an alert to let us know the function was called
-
     firebase.auth().signOut().then(function() { //signs user out
         // Sign-out successful.
 
         document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector`;  //After log out it will display OG greeting
         document.getElementById('loginBut').innerHTML = "Log in with google";               //Changes the button back to user login
         document.getElementById('loginBut').setAttribute('onclick', 'googleLogin()');       //On a click of the button calls googleLogin function
-        window.location.replace("http://localhost:5000/");
+        if(window.location.toString().includes("firebasics-99944.firebaseapp")){
+            window.location.replace("https://firebasics-99944.firebaseapp.com");
+        }
+        else if(window.location.toString().includes("localhost")){
+            window.location.replace("http://localhost:5000/");
+        }
       }).catch(function(error) {
         // An error happened.
       });
