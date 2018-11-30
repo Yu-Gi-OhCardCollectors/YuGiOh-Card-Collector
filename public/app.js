@@ -48,7 +48,7 @@ function googleLogin(){
 
     firebase.auth().signInWithPopup(provider) //this is what actually signs people in 
             
-            .then(result => {                               //this displays hello to the user who just signed in
+            .then(result => {               //this displays hello to the user who just signed in
                 const user = result.user;
                 
                 console.log(user)

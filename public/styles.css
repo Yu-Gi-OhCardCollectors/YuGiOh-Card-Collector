@@ -67,7 +67,7 @@ a{
 
 /*Puts a line seperating header from cards*/
 body nav{
-    border-bottom: solid;
+    border-top: solid;
 }
 
 
