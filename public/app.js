@@ -8,7 +8,11 @@
     messagingSenderId: "898950176638"
   };
 
+
   firebase.initializeApp(config);
+  const db = firebase.firestore();  //firestore database
+
+
 
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
@@ -34,12 +38,33 @@
 
 
 
+/*
+db.settings({timestampsInSnapshots: true});
+db.collection('users').get().then((snapshot)=> {
+    snapshot.docs.forEach(doc => {
+        console.log(doc.data().deck1[1]);
+    })
+});  //gets documents
 
-  // Get a reference to the database service
-  //var database = firebase.database();
-  //firebase.database().ref('users/' + userId)
 
+function addCardToTrunk(){
+    const user = firebase.auth().currentUser;
+    var cards = db.collection('users').doc(`${user.uid}`).deck1;
+    console.log(cards[0]);
 
+    var docRef = db.collection('users').doc(`${user.uid}`);
+
+    docRef.get().then(function(doc) {
+        if (doc.exists) {
+            doc.update(docRef, {deck1: })
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!");
+        }
+    }).catch(function(error) {
+        console.log("Error getting document:", error);
+    });
+}*/
 
 
 
@@ -49,6 +74,10 @@
 
 //javascript that corresponds to the decks.html
 if(window.location.toString().includes("decks.html")){
+    const user = firebase.auth().currentUser;
+    if(user == null){       //prevents user from going onto page from the beginning not logged in
+        window.location.replace("http://localhost:5000/");
+    }
     //Places Card Images
     function placeImages(deck){   
         //for(var i = 0; i < 1; ++i){
@@ -69,7 +98,6 @@ if(window.location.toString().includes("decks.html")){
         }
     }
 
-
     //Deck 1
     function one(){
         alert("Switching to deck 1");
@@ -87,7 +115,6 @@ if(window.location.toString().includes("decks.html")){
         alert("Switching to deck 3");
         placeImages("deck3");
     }
-
 
     // Add activeD class to the current button (highlight it)
     var header = document.getElementById("btns");
@@ -109,6 +136,10 @@ if(window.location.toString().includes("decks.html")){
 }
 //javascript that corresponds to the trunk html page
 else if(window.location.toString().includes("trunk.html")){
+    const user = firebase.auth().currentUser;
+    if(user == null){       //prevents user from going onto page from the beginning not logged in
+        window.location.replace("http://localhost:5000/");
+    }
     //Places card Images similar to other function
     function placeImagesTrunk(){
         for(var i = 0; i < 2; ++i){
@@ -122,7 +153,10 @@ else if(window.location.toString().includes("trunk.html")){
 }
 //javascript corresponding with the desired page 
 else if(window.location.toString().includes("desired.html")){
-
+    const user = firebase.auth().currentUser;
+    if(user == null){       //prevents user from going onto page from the beginning not logged in
+        window.location.replace("http://localhost:5000/");
+    }
 }
 //javascript corresponding to index of home page html file
 else{
@@ -179,7 +213,27 @@ document.addEventListener("DOMContentLoader", event => {
 
 
 
+function newUser(user){
+    const newUse = db.collection('users').doc(`${user.uid}`);
 
+    newUse.get()
+      .then((docSnapshot) => {
+        if (!(docSnapshot.exists)) {
+            newUse.set({
+                trunk: [],
+                deck1: [],
+                deck2: [],
+                deck3: [],
+                desired: []
+            }) // create the document if it's a new user
+        } 
+        /*else {
+            newUse.onSnapshot((doc) => {
+                // do stuff with the data
+            });
+        }*/
+    });
+}
 
 
 
@@ -193,8 +247,7 @@ function googleLogin(){
                 document.getElementById('welcome').innerHTML = `Welcome ${user.displayName}`;
                 document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
                 document.getElementById('loginBut').setAttribute('onclick', 'googleLogout()');  //On a click of the log out button it will call
-                                                                                                //the googleLogout function
-                console.log(user)
+                newUser(user);
             } )
             .catch(console.log)
 }

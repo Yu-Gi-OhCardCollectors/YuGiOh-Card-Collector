@@ -32,10 +32,10 @@
         <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
           <div class="modal-content animate"> <!--action="/action_page.php">-->
               <div class="container">
-                  <img id="card-select" src="images/card0.jpg" height=440px>
+                  <img id="card-select" height=440px>
 
                   <div class="decide">
-                      <li><button>Add to Trunk</button></li>
+                      <li><button onclick="addCardToTrunk()">Add to Trunk</button></li>
                       <li><button>Add to Deck 1</button></li>
                       <li><button>Add to Deck 2</button></li>
                       <li><button>Add to Deck 3</button></li>
@@ -50,8 +50,7 @@
                   <h2>Description</h2>
                   <body>
                       <div id="desOfCard">des</div>
-                  </body>
-                  
+                  </body> 
               </div>
           </div>
       </div>
