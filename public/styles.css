@@ -16,7 +16,7 @@ body ul {
 
 
 /*sign up and login buttons*/
-#register button {
+.register button {
     border: none;
     outline: none;
     padding: 5px 8px;
@@ -27,7 +27,7 @@ body ul {
     float: right;
 }
 
-#register button:hover {
+.register button:hover {
     background-color: #ddd;
 }
 
@@ -143,7 +143,7 @@ body nav{
     outline: none;
     padding: 29px 160px;
     width: 100%;
-    background-color: grey;//#f1f1f1;
+    background-color: grey; /*#f1f1f1;*/
     cursor: pointer;
     font-size: 18px;
 }

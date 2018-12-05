@@ -4,43 +4,56 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-
-        <title>Yugioh CardCollector</title>
-        <link rel = "stylesheet" type = "text/css" href = "styles.css"/>
+    <title>Yugioh CardCollector</title>
+    
+    <link rel = "stylesheet" type = "text/css" href = "styles.css"/>
   </head>
 
   <body>
-        <h1 id="welcome">Welcome to YuGiOh Card Collector</h1>
-    <nav>
-      <!-- Tab buttons to choose what page you are on -->
-      <ul>
-                <li>                       <button class = "tab_btn active">All Cards</button></li>
-                <li><a href="trunk.html">  <button class = "tab_btn">My Trunk</button></a></li>
-                <li><a href="decks.html">  <button class = "tab_btn">My Decks </button></a></li>
-                <li><a href="desired.html"><button class = "tab_btn">Desired Cards </button></a></li>
+      <head>
+          <h1 id="welcome">Welcome to YuGiOh Card Collector</h1>
+          <nav> 
+              <!-- Tab buttons to choose what page you are on -->
+              
+                <ul>
+                   
+                    <select id="selectCards" onchange="updateFilter()">
+                        <option value="allCards">All Cards</option>
+                        <option value="Monster">Monster</option>
+                        <option value="Spell">Spell</option>
+                        <option value="Trap">Trap</option>
+                    </select>
+                    
+                    <li><a>  <button class = "tab_btn active">All Cards</button></a></li>
+                    <li ><a id = "trunkHRef"> <button class = "tab_btn" onclick="TabSwitch()">My Trunk</button></a></li>
+                    <li ><a id = "decksHRef"> <button class = "tab_btn"  onclick="TabSwitch()">My Decks </button></a></li>
+                    <li ><a id = "desiredHRef"> <button class = "tab_btn"  onclick="TabSwitch()">Desired Cards </button></a></li>
+                    <!--Google login from friebase-->
+                    <li id = "login" class = "register"><button id = "loginBut" onclick="googleLogin()".style.display='block'">Login With Google</button></li>
+                    <li id = "logout" class = "register"><button id = "logoutBut" onclick="googleLogout()".style.display='block'">Logout</button></li> 
+                </ul>
+            </nav>
+        </head>
 
-                                                <!--Google login from friebase-->
-          <li id = "register"><button id = "loginBut" onclick="googleLogin()".style.display='block'">Login With Google</button></li> 
+    <!--Will display Card Images -->
+    <div id="cardImages"> 
       
-      </ul>
-    </nav>
-  </head>
-
-
-     <!-- Pop Up login screen -->
+    </div>
+    
+    <!-- PopUp Card Info -->
     <div id="id02" class="modal">
         <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
           <div class="modal-content animate"> <!--action="/action_page.php">-->
               <div class="container">
                   <img id="card-select" src="images/card0.jpg" height=440px>
-
+                  
                   <div class="decide">
-                      <li><button>Add to Trunk</button></li>
-                      <li><button>Add to Deck 1</button></li>
-                      <li><button>Add to Deck 2</button></li>
-                      <li><button>Add to Deck 3</button></li>
-                      <li><button>Add to Desired Cards</button></li>
-                  </div>
+                    <li><button onclick="GetCardIndex()">Add to Trunk</button></li>
+                    <li><button>Add to Deck 1</button></li>
+                    <li><button>Add to Deck 2</button></li>
+                    <li><button>Add to Deck 3</button></li>
+                    <li><button>Add to Desired Cards</button></li>
+                </div>
 
                   <h2>Title</h2>
                   <body>
@@ -50,18 +63,20 @@
                   <h2>Description</h2>
                   <body>
                       <div id="desOfCard">des</div>
+
                   </body>
-                  
+
               </div>
           </div>
       </div>
 
-  <!--Will display Card Images -->
-  <div id="cardImages"> 
-  </div>
+  
+
 
 
   <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="main.js"></script>
   <script src="app.js"></script>
  
   </body>

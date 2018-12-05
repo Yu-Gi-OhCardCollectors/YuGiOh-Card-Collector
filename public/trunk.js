@@ -8,7 +8,3 @@ function placeImagesTrunk(){
 	}
 }
 placeImagesTrunk();
-
-function signOut(){
-	window.location.replace("http://localhost:5000/");
-}
