@@ -37,6 +37,11 @@ function three(){
 	placeImages("deck3");
 }
 
+// Retrieve the loaded templates.
+var templates = templatesImport.import;
+
+// Get the template.
+var template = templates.getElementById("cardImg");
 
 // Add activeD class to the current button (highlight it)
 var header = document.getElementById("btns");
