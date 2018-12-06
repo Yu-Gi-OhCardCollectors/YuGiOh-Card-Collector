@@ -363,113 +363,76 @@ else{
 
 }
 
+var xmlhttp = new XMLHttpRequest();
+var myObj;
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
+  }
+};
+xmlhttp.open("GET", "cards.json", true);
+xmlhttp.send();	
 
 function updateFilter() { 
 
   var zone = document.getElementById("selectCards");
-
-if(zone.value == "allCards"){
   
-  alert("You clicked allCards");
-  $("#cardImages").empty();
-
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
-      for(var i = 0; i < 7986; ++i){
-        var cardType = myObj.cards[i].type;
-        
-          var cardImage = document.createElement('IMG');			//creates <img> tag in html
-          cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-          cardImage.setAttribute('width', '150');
-          cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
-          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
-        
-      }
+  if(zone.value == "allCards"){
+    alert("You clicked allCards");
+    $("#cardImages").empty();
+    
+    for(var i = 0; i < 7986; ++i){
+      var cardImage = document.createElement('IMG');			//creates <img> tag in html
+      cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+      cardImage.setAttribute('width', '150');
+      cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+      document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
     }
-  };
-  xmlhttp.open("GET", "cards.json", true);
-  xmlhttp.send();	
-}
-
+  }
   else if (zone.value == "Monster"){
-
-  alert("You clicked Monster");
-  $("#cardImages").empty();
-
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
-      for(var i = 0; i < 7986; ++i){
-        var cardType = myObj.cards[i].type;
-        if(cardType == "Monster"){
-          var cardImage = document.createElement('IMG');			//creates <img> tag in html
-          cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-          cardImage.setAttribute('width', '150');
-          cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
-          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
-        }
+    alert("You clicked Monster");
+    $("#cardImages").empty();
+    for(var i = 0; i < 7986; ++i){
+      var cardType = myObj.cards[i].type;
+      if(cardType == "Monster"){
+        var cardImage = document.createElement('IMG');			//creates <img> tag in html
+        cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+        cardImage.setAttribute('width', '150');
+        cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+        document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
       }
     }
-  };
-  xmlhttp.open("GET", "cards.json", true);
-  xmlhttp.send();	
-}
-
-else if(zone.value == "Spell"){
-
-  alert("You clicked Spell");
-
-  $("#cardImages").empty();
-
-
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
-      for(var i = 0; i < 7986; ++i){
-        var cardType = myObj.cards[i].type;
-        if(cardType == "Spell"){
-          var cardImage = document.createElement('IMG');			//creates <img> tag in html
-          cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-          cardImage.setAttribute('width', '150');
-          cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
-          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
-        }
+  }
+  else if(zone.value == "Spell"){
+    alert("You clicked Spell");
+    $("#cardImages").empty();
+    
+    for(var i = 0; i < 7986; ++i){
+      var cardType = myObj.cards[i].type;
+      if(cardType == "Spell"){
+        var cardImage = document.createElement('IMG');			//creates <img> tag in html
+        cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+        cardImage.setAttribute('width', '150');
+        cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+        document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
       }
     }
-  };
-  xmlhttp.open("GET", "cards.json", true);
-  xmlhttp.send();	
-}
-
-else if(zone.value == "Trap"){
-
-  alert("You clicked Trap");
-  
-  $("#cardImages").empty();
-
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-    if (this.readyState == 4 && this.status == 200) {
-      var myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
-      for(var i = 0; i < 7986; ++i){
-        var cardType = myObj.cards[i].type;
-        if(cardType == "Trap"){
-          var cardImage = document.createElement('IMG');			//creates <img> tag in html
-          cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-          cardImage.setAttribute('width', '150');
-          cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
-          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
-        }
+  }
+  else if(zone.value == "Trap"){
+    alert("You clicked Trap");
+    $("#cardImages").empty();
+    
+    for(var i = 0; i < 7986; ++i){
+      var cardType = myObj.cards[i].type;
+      if(cardType == "Trap"){
+        var cardImage = document.createElement('IMG');			//creates <img> tag in html
+        cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+        cardImage.setAttribute('width', '150');
+        cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+        document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
       }
     }
-  };
-  xmlhttp.open("GET", "cards.json", true);
-  xmlhttp.send();	
-}
+  }
 }
 
 function SearchCards(){
@@ -482,29 +445,14 @@ function SearchCards(){
 
 
   $("#cardImages").empty();
-
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-
-    if (this.readyState == 4 && this.status == 200) {
-
-
-      var myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
-      for(var i = 0; i < 7986; ++i){
-        var cardTitle = myObj.cards[i].title;
-        
-        if( cardTitle.includes(filter) ){
-
-          var cardImage = document.createElement('IMG');			//creates <img> tag in html
-          cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-          cardImage.setAttribute('width', '150');
-          cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
-          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
-        }
-      }
+  for(var i = 0; i < 7986; ++i){
+    var cardTitle = myObj.cards[i].title;
+    if( cardTitle.includes(filter) ){
+      var cardImage = document.createElement('IMG');			//creates <img> tag in html
+      cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+      cardImage.setAttribute('width', '150');
+      cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+      document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
     }
-  };
-  xmlhttp.open("GET", "cards.json", true);
-  xmlhttp.send();
-
+  }
 }
