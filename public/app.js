@@ -404,3 +404,39 @@ else if(zone.value == "Trap"){
 }
 }
 
+function SearchCards(){
+  var input, filter;
+
+
+  input = document.getElementById("myInput");
+  filter = input.value;
+  console.log(filter);
+
+
+  $("#cardImages").empty();
+
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() {
+
+    if (this.readyState == 4 && this.status == 200) {
+
+
+      var myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
+      for(var i = 0; i < 7986; ++i){
+        var cardTitle = myObj.cards[i].title;
+        
+        if( cardTitle.includes(filter) ){
+
+          var cardImage = document.createElement('IMG');			//creates <img> tag in html
+          cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+          cardImage.setAttribute('width', '150');
+          cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
+        }
+      }
+    }
+  };
+  xmlhttp.open("GET", "cards.json", true);
+  xmlhttp.send();
+
+}

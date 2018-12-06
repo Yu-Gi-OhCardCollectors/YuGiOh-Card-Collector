@@ -15,6 +15,11 @@
     <nav>
       <!-- Tab buttons to choose what page you are on -->
       <ul>
+           
+            <input type="text" id="myInput"  placeholder="Search for cards.." title="Type in a name">
+            <button onclick="SearchCards()"> search </button> 
+                   
+
             <select id="selectCards" onchange="updateFilter()">
                     <option value="allCards">All Cards</option>
                     <option value="Monster">Monster</option>
@@ -70,6 +75,7 @@
 
   <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
   <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+  
   <script src="app.js"></script>
  
   </body>
