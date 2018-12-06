@@ -7,32 +7,29 @@
 
     <body>
         <head>
-            <h1 id="welcome">Welcome to YuGiOh Card Collector</h1>
+            <h1 id="welcome">Welcome to Yugioh Card Collection</h1>
+
         	<nav>
                 <!-- Tab buttons to choose what page you are on -->
         		<ul>
-        			<li><a href="index.html"> <button class = "tab_btn">All Cards</button></a></li>
-        			<li><a href="trunk.html"> <button class = "tab_btn">My Trunk</button></a></li>
-        			<li>                      <button class = "tab_btn active">My Decks</button></li>
-                    <li><a href="desired.html"><button class = "tab_btn">Desired Cards</button></a></li>
-                    <!--Google login from friebase-->
-                    <li id = "login" class = "register"><button id = "loginBut" onclick="googleLogin()".style.display='block'">Login With Google</button></li>
-                    <li id = "logout" class = "register"><button id = "logoutBut" onclick="googleLogout()".style.display='block'">Logout</button></li> 
+        			<li><a href="index.html"><button class = "tab_btn">All Cards</button></a></li>
+                    <li><a href="trunk.html"><button class = "tab_btn">My Trunk</button></a></li>
+                    <li><a href="decks.html"><button class = "tab_btn">My Decks </button></a></li>
+                    <li>                     <button class = "tab_btn active">Desired Cards </button></li>
+
+                    <li id = "register"><button id = "loginBut" onclick="googleLogout()">Log out</button></li>
         		</ul>
         	</nav>
         </head>
-
-        <!--Buttons to cycle through decks-->
-        <div id = "btns">
-            <button class="btn" onclick="one()">1 </button>
-            <button class="btn" onclick="two()">2</button>
-            <button class="btn" onclick="three()">3</button>
+        <!--idk if this change will work-->
+        <!--This shit works-->
+        <!--Will display Card Images-->
+        <div id="cardImages">
+            
         </div>
 
+        <p> Currently no cards are desired</p>
         <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
-        <script src="main.js"></script>
         <script src="app.js"></script>
-        
-        <script type="text/javascript" src="decks.js"></script>
     </body>
 </html>
