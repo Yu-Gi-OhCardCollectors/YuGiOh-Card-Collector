@@ -15,7 +15,7 @@ const db = firebase.firestore();  //firestore database
 firebase.auth().onAuthStateChanged(function(user) { 
   if (user) {
     // User is signed in.
-    document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector ${user.displayName}`; //Changes header to included users email name
+    //document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector ${user.displayName}`; //Changes header to included users email name
 
     document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
     document.getElementById('loginBut').setAttribute('onclick', 'googleLogout()');  //On a click of the log out button it will call
@@ -34,33 +34,101 @@ firebase.auth().onAuthStateChanged(function(user) {
 });
 
 
-/*
-db.settings({timestampsInSnapshots: true});
-db.collection('users').get().then((snapshot)=> {
-  snapshot.docs.forEach(doc => {
-      console.log(doc.data().deck1[1]);
-  })
-});  //gets documents
 
 
+
+//adds cards index to trunk in firebase
 function addCardToTrunk(){
-  const user = firebase.auth().currentUser;
-  var cards = db.collection('users').doc(`${user.uid}`).deck1;
-  console.log(cards[0]);
+  var user = firebase.auth().currentUser;   //current user
+  var cardInd = document.getElementById("card-select").getAttribute("index");     //gets card index 
+    db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {           //gets the document corresponding to users uid
+        var trunk = snapshot.data().trunk;                                        //gets the array in trunk field
+        if(trunk.includes(cardInd)){                                              //card is already in users trunk
+          alert('Card Already in your Trunk');
+        }   
+        else{                                                                      //card is not in users trunk yet
+          trunk.push(cardInd);
+          db.collection('users').doc(`${user.uid}`).update({
+              "trunk": trunk
+          })
+        }
+    });
+}
 
-  var docRef = db.collection('users').doc(`${user.uid}`);
+//adds cards index to deck1 in firebase
+function addCardToDeck1(){
+  var user = firebase.auth().currentUser;   //current user
+  var cardInd = document.getElementById("card-select").getAttribute("index");     //gets card index 
+    db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {           //gets the document corresponding to users uid
+        var deck1 = snapshot.data().deck1;                                        //gets the array in deck1 field
+        if(deck1.includes(cardInd)){                                              //card is already in users deck1
+          alert('Card Already in your deck1');
+        }   
+        else{                                                                      //card is not in users deck1 yet
+          deck1.push(cardInd);
+          db.collection('users').doc(`${user.uid}`).update({
+              "deck1": deck1
+          })
+        }
+    });
+}
 
-  docRef.get().then(function(doc) {
-      if (doc.exists) {
-          doc.update(docRef, {deck1: })
-      } else {
-          // doc.data() will be undefined in this case
-          console.log("No such document!");
-      }
-  }).catch(function(error) {
-      console.log("Error getting document:", error);
-  });
-}*/
+//adds cards index to deck2 in firebase
+function addCardToDeck2(){
+  var user = firebase.auth().currentUser;   //current user
+  var cardInd = document.getElementById("card-select").getAttribute("index");     //gets card index 
+    db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {           //gets the document corresponding to users uid
+        var deck2 = snapshot.data().deck2;                                        //gets the array in deck2 field
+        if(deck2.includes(cardInd)){                                              //card is already in users deck2
+          alert('Card Already in your deck2');
+        }   
+        else{                                                                      //card is not in users deck2 yet
+          deck2.push(cardInd);
+          db.collection('users').doc(`${user.uid}`).update({
+              "deck2": deck2
+          })
+        }
+    });
+}
+
+//adds cards index to deck3 in firebase
+function addCardToDeck3(){
+  var user = firebase.auth().currentUser;   //current user
+  var cardInd = document.getElementById("card-select").getAttribute("index");     //gets card index 
+    db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {           //gets the document corresponding to users uid
+        var deck3 = snapshot.data().deck3;                                        //gets the array in deck3 field
+        if(deck3.includes(cardInd)){                                              //card is already in users deck3
+          alert('Card Already in your deck3');
+        }   
+        else{                                                                      //card is not in users deck3 yet
+          deck3.push(cardInd);
+          db.collection('users').doc(`${user.uid}`).update({
+              "deck3": deck3
+          })
+        }
+    });
+}
+
+//adds cards index to desired in firebase
+function addCardToDesired(){
+  var user = firebase.auth().currentUser;   //current user
+  var cardInd = document.getElementById("card-select").getAttribute("index");     //gets card index 
+    db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {           //gets the document corresponding to users uid
+        var desired = snapshot.data().desired;                                        //gets the array in desired field
+        if(desired.includes(cardInd)){                                              //card is already in users desired
+          alert('Card Already in your desired');
+        }   
+        else{                                                                      //card is not in users desired yet
+          desired.push(cardInd);
+          db.collection('users').doc(`${user.uid}`).update({
+              "desired": desired
+          })
+        }
+    });
+}
+
+
+
 
 
 
@@ -252,7 +320,7 @@ function googleLogin(){
           
           .then(result => {                               //this displays hello to the user who just signed in
               const user = result.user;
-              document.getElementById('welcome').innerHTML = `Welcome ${user.displayName}`;
+              //document.getElementById('welcome').innerHTML = `Welcome ${user.displayName}`;
               document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
               document.getElementById('loginBut').setAttribute('onclick', 'googleLogout()');  //On a click of the log out button it will call
               newUser(user);
@@ -265,7 +333,7 @@ function googleLogout(){
   firebase.auth().signOut().then(function() { //signs user out
       // Sign-out successful.
 
-      document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector`;  //After log out it will display OG greeting
+      //document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector`;  //After log out it will display OG greeting
       document.getElementById('loginBut').innerHTML = "Log in with google";               //Changes the button back to user login
       document.getElementById('loginBut').setAttribute('onclick', 'googleLogin()');       //On a click of the button calls googleLogin function
       if(window.location.toString().includes("firebasics-99944.firebaseapp")){

@@ -15,17 +15,6 @@
     <nav>
       <!-- Tab buttons to choose what page you are on -->
       <ul>
-           
-            <input type="text" id="myInput"  placeholder="Search for cards.." title="Type in a name">
-            <button onclick="SearchCards()"> search </button> 
-                   
-
-            <select id="selectCards" onchange="updateFilter()">
-                    <option value="allCards">All Cards</option>
-                    <option value="Monster">Monster</option>
-                    <option value="Spell">Spell</option>
-                    <option value="Trap">Trap</option>
-            </select>
 
             <li><a>  <button class = "tab_btn active">All Cards</button></a></li>
             <li ><a id = "trunkHRef"> <button class = "tab_btn" onclick="TabSwitch()">My Trunk</button></a></li>
@@ -39,6 +28,18 @@
     </nav>
   </head>
 
+  <div id="search">
+      <input type="text" id="myInput"  placeholder="Search for cards.." title="Type in a name">
+      <button id="search-input" onclick="SearchCards()"> Search </button> 
+                   
+      <select id="selectCards" onchange="updateFilter()">
+          <option value="allCards">All Cards</option>
+          <option value="Monster">Monster</option>
+          <option value="Spell">Spell</option>
+          <option value="Trap">Trap</option>
+      </select>
+  </div>
+
 
      <!-- Pop Up login screen -->
     <div id="id02" class="modal">
@@ -49,10 +50,10 @@
 
                   <div class="decide">
                       <li><button onclick="addCardToTrunk()">Add to Trunk</button></li>
-                      <li><button>Add to Deck 1</button></li>
-                      <li><button>Add to Deck 2</button></li>
-                      <li><button>Add to Deck 3</button></li>
-                      <li><button>Add to Desired Cards</button></li>
+                      <li><button onclick="addCardToDeck1()">Add to Deck 1</button></li>
+                      <li><button onclick="addCardToDeck2()">Add to Deck 2</button></li>
+                      <li><button onclick="addCardToDeck3()">Add to Deck 3</button></li>
+                      <li><button onclick="addCardToDesired()">Add to Desired Cards</button></li>
                   </div>
 
                   <h2>Title</h2>
