@@ -8,27 +8,32 @@
     <body>
         <head>
             <h1 id="welcome">Welcome to Yugioh Card Collection</h1>
-
         	<nav>
                 <!-- Tab buttons to choose what page you are on -->
         		<ul>
-        			<li><a href="index.html"><button class = "tab_btn">All Cards</button></a></li>
-                    <li><a href="trunk.html"><button class = "tab_btn">My Trunk</button></a></li>
-                    <li>                     <button class = "tab_btn active">My Decks </button></a></li>
-                    <li><a href="desired.html"><button class = "tab_btn">Desired Cards </button></li>
+        			<li><a href="index.html"> <button class = "tab_btn">All Cards</button></a></li>
+        			<li><a href="trunk.html"> <button class = "tab_btn">My Trunk</button></a></li>
+        			<li>                      <button class = "tab_btn active">My Decks</button></li>
+                    <li><a href="desired.html"><button class = "tab_btn">Desired Cards</button></a></li>
 
-                    <li id = "register"><button id = "loginBut" onclick="googleLogout()">Log out</button></li>
+                    <li id = "register"><button id = "loginBut" onclick="googleLogout()".style.display='block'">Log out</button></li>
         		</ul>
         	</nav>
         </head>
-        <!--idk if this change will work-->
-        <!--This shit works-->
-        <!--Will display Card Images-->
+
+        <!--Buttons to cycle through decks-->
+        <div id = "btns">
+            <button class="btn" onclick="one()">1 </button>
+            <button class="btn" onclick="two()">2</button>
+            <button class="btn" onclick="three()">3</button>
+        </div>
+        
+        <!--Will display card images-->
         <div id="cardImages">
             
         </div>
 
-        <p> Currently no cards are desired</p>
+        <!--<script type="text/javascript" src="decks.js"></script>-->
         <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
         <script src="app.js"></script>
     </body>
