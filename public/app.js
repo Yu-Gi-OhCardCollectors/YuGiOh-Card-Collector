@@ -11,25 +11,17 @@ var config = {
 
 firebase.initializeApp(config);
 const db = firebase.firestore();  //firestore database
+db.settings({ timestampsInSnapshots: true });
 
 firebase.auth().onAuthStateChanged(function(user) { 
+  placeCards();
   if (user) {
     // User is signed in.
-    //document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector ${user.displayName}`; //Changes header to included users email name
-
     document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
     document.getElementById('loginBut').setAttribute('onclick', 'googleLogout()');  //On a click of the log out button it will call
-
-    if(user != null){
-
-      var email_id = user.email;
-      //document.getElementById("user_para").innerHTML = "Welcome User : " + email_id;
-
-    }
-
-  } else {
+  } 
+  else {
     // No user is signed in.
-    document.getElementById('welcome').innerHTML = "Welcome to YuGiOh Card Collector";  
   }
 });
 
@@ -137,155 +129,181 @@ function addCardToDesired(){
 
 
 //javascript that corresponds to the decks.html
-if(window.location.toString().includes("decks.html")){
-  const user = firebase.auth().currentUser;
-  
-  /*if(user == null){       //prevents user from going onto page from the beginning not logged in
-      window.location.replace("http://localhost:5000/"); This is good idead to stop people fromtyping in the URL. For now is kinda causing problems so I commented
-  }*/                                                 // it out. LogOut redirects to home page and my TabSwitch() function will not let a non-user switch pages.
-                                                      // Will come back to fix 
-  //Places Card Images
-  function placeImages(deck){   
-      //for(var i = 0; i < 1; ++i){
-          var cardImage = document.createElement('IMG');          //creates <img> tag in html
-          cardImage.setAttribute('src', 'images/'+deck+'/card0.jpg');  //image path
-          cardImage.setAttribute('class', 'cardImg');  //sets class to each image
-          cardImage.setAttribute('width', '150');
-          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
-      //}
-  }
+function placeCards(){
+    if(window.location.toString().includes("decks.html")){
+        const user = firebase.auth().currentUser;
+        var trunk;
+        db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {             //gets the document corresponding to users uid
+            trunk = snapshot.data().trunk;                                              //gets the array in trunk field    
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myObj = JSON.parse(this.responseText);                          //parses json file and stores it in myObj
+                    for(var i = 0; i <= trunk.length-1; ++i){
+                        var cardImage = document.createElement('IMG');                  //creates <img> tag in html
+                        cardImage.setAttribute('src', myObj.cards[trunk[i]].imageUrl);  //image path
+                        cardImage.setAttribute('width', '150');
+                        //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
+                        document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
+                    }
+                }
+            };
+            xmlhttp.open("GET", "cards.json", true);
+            xmlhttp.send();
+        });
 
-  //delete the images so that the website will print out the correct deck
-  function deleteImages(){
-      var div = document.getElementById("cardImages"); //div where card images are being printed
-      var img = div.getElementsByClassName("cardImg"); //put all images in a list
-      for(var i = 0; i < img.length; ++i){
-          div.removeChild(div.childNodes[i]);         //delete images from div
+
+      // Add activeD class to the current button (highlight it)
+      var header = document.getElementById("btns");
+      var btns = header.getElementsByClassName("btn");
+      for (var i = 0; i < btns.length; i++) {
+        btns[i].addEventListener("click", function() {
+          if (document.querySelector('.activeD') !== null){        //checks if class activeD exists
+              deleteImages();
+              var current = header.getElementsByClassName("activeD");
+              current[0].className = current[0].className.replace(" activeD", "");
+              this.className += " activeD";
+          }
+          else{
+              deleteImages();
+              this.className += " activeD";
+          }
+        });
       }
-  }
+    }
+    //javascript that corresponds to the trunk html page
+    else if(window.location.toString().includes("trunk.html")){
+        const user = firebase.auth().currentUser;
+        var trunk;
+        db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {             //gets the document corresponding to users uid
+            trunk = snapshot.data().trunk;                                              //gets the array in trunk field    
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    for(var i = 0; i <= trunk.length-1; ++i){
+                        var cardImage = document.createElement('IMG');                  //creates <img> tag in html
+                        cardImage.setAttribute('src', myObj.cards[trunk[i]].imageUrl);  //image path
+                        cardImage.setAttribute('width', '150');
+                        //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
+                        document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
+                    }
+                }
+            };
+            xmlhttp.open("GET", "cards.json", true);
+            xmlhttp.send();
+        });
+    }
+    //javascript corresponding with the desired page 
+    else if(window.location.toString().includes("desired.html")){
+        const user = firebase.auth().currentUser;
+        var desired;
+        db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {             //gets the document corresponding to users uid
+            desired = snapshot.data().desired;                                              //gets the array in desired field    
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var myObj = JSON.parse(this.responseText);                          //parses json file and stores it in myObj
+                    for(var i = 0; i <= desired.length-1; ++i){
+                        var cardImage = document.createElement('IMG');                  //creates <img> tag in html
+                        cardImage.setAttribute('src', myObj.cards[desired[i]].imageUrl);  //image path
+                        cardImage.setAttribute('width', '150');
+                        //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
+                        document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
+                    }
+                }
+            };
+            xmlhttp.open("GET", "cards.json", true);
+            xmlhttp.send();
+        });                                               
+    }
+    //javascript corresponding to index of home page html file
+    else{
+      var xmlhttp = new XMLHttpRequest();
+      xmlhttp.onreadystatechange = function() {
+          if (this.readyState == 4 && this.status == 200) {
+              var myObj = JSON.parse(this.responseText);    //parses json file and stores it in myObj
+              for(var i = 0; i < 7986; ++i){
+                  var cardImage = document.createElement('IMG');          //creates <img> tag in html
+                  cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+                  cardImage.setAttribute('width', '150');
+                  cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
+                  document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
+              }
+          }
+      };
+      xmlhttp.open("GET", "cards.json", true);
+      xmlhttp.send();
 
-  //Deck 1
-  function one(){
-      alert("Switching to deck 1");
-      placeImages("deck1");
-  }
 
-  //Deck 2
-  function two(){
-      alert("Switching to deck 2");
-      placeImages("deck2");
-  }
-
-  //Deck 3
-  function three(){
-      alert("Switching to deck 3");
-      placeImages("deck3");
-  }
-
-  // Add activeD class to the current button (highlight it)
-  var header = document.getElementById("btns");
-  var btns = header.getElementsByClassName("btn");
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].addEventListener("click", function() {
-      if (document.querySelector('.activeD') !== null){        //checks if class activeD exists
-          deleteImages();
-          var current = header.getElementsByClassName("activeD");
-          current[0].className = current[0].className.replace(" activeD", "");
-          this.className += " activeD";
-      }
-      else{
-          deleteImages();
-          this.className += " activeD";
-      }
-    });
-  }
-}
-//javascript that corresponds to the trunk html page
-else if(window.location.toString().includes("trunk.html")){
-  const user = firebase.auth().currentUser;
-
-  /*if(user == null){       //prevents user from going onto page from the beginning not logged in
-      window.location.replace("http://localhost:5000/");This is good idead to stop people fromtyping in the URL. For now is kinda causing problems so I commented
-  }*/                                                 // it out. LogOut redirects to home page and my TabSwitch() function will not let a non-user switch pages.
-                                                      // Will come back to fix 
-
-  //Places card Images similar to other function
-  function placeImagesTrunk(){
-      for(var i = 0; i < 2; ++i){
-          var cardImage = document.createElement('IMG');
-          cardImage.setAttribute('src', 'images/card'+i+'.jpg');
-          cardImage.setAttribute('width', '150');
-          document.getElementById('cardImages').appendChild(cardImage);
-      }
-  }
-  placeImagesTrunk();
-}
-//javascript corresponding with the desired page 
-else if(window.location.toString().includes("desired.html")){
-  const user = firebase.auth().currentUser;
-  
-  /*if(user == null){       //prevents user from going onto page from the beginning not logged in
-      window.location.replace("http://localhost:5000/");This is good idead to stop people fromtyping in the URL. For now is kinda causing problems so I commented
-    }*/                                                 // it out. LogOut redirects to home page and my TabSwitch() function will not let a non-user switch pages.
-                                                        // Will come back to fix 
-
-                                                        
-}
-//javascript corresponding to index of home page html file
-else{
-  //place card images using json file
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-          var myObj = JSON.parse(this.responseText);    //parses json file and stores it in myObj
-          for(var i = 0; i < 7986; ++i){
-              var cardImage = document.createElement('IMG');          //creates <img> tag in html
-              cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-              cardImage.setAttribute('width', '150');
-              cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
-              document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
+      //for card image pop up
+      var modal = document.getElementById('id02');
+      window.onclick = function(event){
+          if (event.target == modal) {
+              modal.style.display = "none";
           }
       }
-  };
-  xmlhttp.open("GET", "cards.json", true);
-  xmlhttp.send();
-
-  //intiate card pop up form with card image
-  function cardDecide(image, i, title, des){
-          document.getElementById('id02').style.display = 'block';
-          document.getElementById('card-select').setAttribute('src', image);
-          document.getElementById('card-select').setAttribute('index', i); //creates attribute index
-          document.getElementById('nameOfCard').innerHTML = title;
-          document.getElementById('desOfCard').innerHTML = des;
-  }
-
-  //for card image pop up
-  var modal = document.getElementById('id02');
-  window.onclick = function(event){
-      if (event.target == modal) {
-          modal.style.display = "none";
-      }
-  }
+    }
 }
+
+//intiate card pop up form with card image
+function cardDecide(image, i, title, des){
+        document.getElementById('id02').style.display = 'block';
+        document.getElementById('card-select').setAttribute('src', image);
+        document.getElementById('card-select').setAttribute('index', i); //creates attribute index
+        document.getElementById('nameOfCard').innerHTML = title;
+        document.getElementById('desOfCard').innerHTML = des;
+}
+
+//delete the images so that the website will print out the correct deck
+function deleteImages(){
+    /*var div = document.getElementById("cardImages"); //div where card images are being printed
+    var img = div.getElementsByClassName("cardImg"); //put all images in a list
+    for(var i = 0; i < img.length; ++i){
+        div.removeChild(div.childNodes[i]);         //delete images from div
+    }*/
+    $("#cardImages").empty();
+}
+
+//Deck 1
+function one(){
+    alert("Switching to deck 1");
+    placeImages("deck1");
+}
+
+//Deck 2
+function two(){
+    alert("Switching to deck 2");
+    placeImages("deck2");
+}
+
+//Deck 3
+function three(){
+    alert("Switching to deck 3");
+    placeImages("deck3");
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 document.addEventListener("DOMContentLoader", event => {
   const app = firebase.app();
   console.log(app)
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function newUser(user){
   const newUse = db.collection('users').doc(`${user.uid}`);
@@ -363,6 +381,32 @@ else{
 
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+Filters
+
+
+*/
+
+
 var xmlhttp = new XMLHttpRequest();
 var myObj;
 xmlhttp.onreadystatechange = function() {
@@ -372,6 +416,7 @@ xmlhttp.onreadystatechange = function() {
 };
 xmlhttp.open("GET", "cards.json", true);
 xmlhttp.send();	
+
 
 //Updates Cards based on Search Filter and Type Filter
 function updateFilter(search) { 
