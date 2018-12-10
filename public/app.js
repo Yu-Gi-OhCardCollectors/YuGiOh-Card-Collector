@@ -40,6 +40,7 @@ function addCardToTrunk(){
         }   
         else{                                                                      //card is not in users trunk yet
           trunk.push(cardInd);
+          trunk.sort(function(a,b) {return a-b});
           db.collection('users').doc(`${user.uid}`).update({
               "trunk": trunk
           })
@@ -58,6 +59,7 @@ function addCardToDeck1(){
         }   
         else{                                                                      //card is not in users deck1 yet
           deck1.push(cardInd);
+          deck1.sort(function(a,b) {return a-b});
           db.collection('users').doc(`${user.uid}`).update({
               "deck1": deck1
           })
@@ -76,6 +78,7 @@ function addCardToDeck2(){
         }   
         else{                                                                      //card is not in users deck2 yet
           deck2.push(cardInd);
+          deck2.sort(function(a,b) {return a-b});
           db.collection('users').doc(`${user.uid}`).update({
               "deck2": deck2
           })
@@ -94,6 +97,7 @@ function addCardToDeck3(){
         }   
         else{                                                                      //card is not in users deck3 yet
           deck3.push(cardInd);
+          deck3.sort(function(a,b) {return a-b});
           db.collection('users').doc(`${user.uid}`).update({
               "deck3": deck3
           })
@@ -112,6 +116,7 @@ function addCardToDesired(){
         }   
         else{                                                                      //card is not in users desired yet
           desired.push(cardInd);
+          desired.sort(function(a,b) {return a-b});
           db.collection('users').doc(`${user.uid}`).update({
               "desired": desired
           })
@@ -137,13 +142,11 @@ function placeCards(){
         for (var i = 0; i < btns.length; i++) {
           btns[i].addEventListener("click", function() {
             if (document.querySelector('.activeD') !== null){        //checks if class activeD exists
-                deleteImages();
                 var current = header.getElementsByClassName("activeD");
                 current[0].className = current[0].className.replace(" activeD", "");
                 this.className += " activeD";
             }
             else{
-                deleteImages();
                 this.className += " activeD";
             }
           });
@@ -231,10 +234,10 @@ function two(){
 function three(){
     $("#cardImages").empty();
     const user = firebase.auth().currentUser;
-    var deck2;
+    var deck3;
     db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {  //gets the document corresponding to users uid
-        deck2 = snapshot.data().deck2;                               //gets the array in deck2 field    
-        parseJSON(deck2);                                              //calls function to print cards from json file
+        deck3 = snapshot.data().deck3;                               //gets the array in deck3 field    
+        parseJSON(deck3);                                              //calls function to print cards from json file
     });
 }
 
