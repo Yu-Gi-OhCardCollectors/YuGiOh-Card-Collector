@@ -131,89 +131,40 @@ function addCardToDesired(){
 //javascript that corresponds to the decks.html
 function placeCards(){
     if(window.location.toString().includes("decks.html")){
-        const user = firebase.auth().currentUser;
-        var trunk;
-        db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {             //gets the document corresponding to users uid
-            trunk = snapshot.data().trunk;                                              //gets the array in trunk field    
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    var myObj = JSON.parse(this.responseText);                          //parses json file and stores it in myObj
-                    for(var i = 0; i <= trunk.length-1; ++i){
-                        var cardImage = document.createElement('IMG');                  //creates <img> tag in html
-                        cardImage.setAttribute('src', myObj.cards[trunk[i]].imageUrl);  //image path
-                        cardImage.setAttribute('width', '150');
-                        //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
-                        document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
-                    }
-                }
-            };
-            xmlhttp.open("GET", "cards.json", true);
-            xmlhttp.send();
-        });
-
-
-      // Add activeD class to the current button (highlight it)
-      var header = document.getElementById("btns");
-      var btns = header.getElementsByClassName("btn");
-      for (var i = 0; i < btns.length; i++) {
-        btns[i].addEventListener("click", function() {
-          if (document.querySelector('.activeD') !== null){        //checks if class activeD exists
-              deleteImages();
-              var current = header.getElementsByClassName("activeD");
-              current[0].className = current[0].className.replace(" activeD", "");
-              this.className += " activeD";
-          }
-          else{
-              deleteImages();
-              this.className += " activeD";
-          }
-        });
-      }
+        // Add activeD class to the current button (highlight it)
+        var header = document.getElementById("btns");
+        var btns = header.getElementsByClassName("btn");
+        for (var i = 0; i < btns.length; i++) {
+          btns[i].addEventListener("click", function() {
+            if (document.querySelector('.activeD') !== null){        //checks if class activeD exists
+                deleteImages();
+                var current = header.getElementsByClassName("activeD");
+                current[0].className = current[0].className.replace(" activeD", "");
+                this.className += " activeD";
+            }
+            else{
+                deleteImages();
+                this.className += " activeD";
+            }
+          });
+        }
     }
     //javascript that corresponds to the trunk html page
     else if(window.location.toString().includes("trunk.html")){
         const user = firebase.auth().currentUser;
         var trunk;
-        db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {             //gets the document corresponding to users uid
-            trunk = snapshot.data().trunk;                                              //gets the array in trunk field    
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    for(var i = 0; i <= trunk.length-1; ++i){
-                        var cardImage = document.createElement('IMG');                  //creates <img> tag in html
-                        cardImage.setAttribute('src', myObj.cards[trunk[i]].imageUrl);  //image path
-                        cardImage.setAttribute('width', '150');
-                        //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
-                        document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
-                    }
-                }
-            };
-            xmlhttp.open("GET", "cards.json", true);
-            xmlhttp.send();
+        db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {  //gets the document corresponding to users uid
+            trunk = snapshot.data().trunk;                                   //gets the array in trunk field    
+            parseJSON(trunk);                                                //calls function to print cards from json file                        
         });
     }
     //javascript corresponding with the desired page 
     else if(window.location.toString().includes("desired.html")){
         const user = firebase.auth().currentUser;
         var desired;
-        db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {             //gets the document corresponding to users uid
-            desired = snapshot.data().desired;                                              //gets the array in desired field    
-            var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
-                if (this.readyState == 4 && this.status == 200) {
-                    var myObj = JSON.parse(this.responseText);                          //parses json file and stores it in myObj
-                    for(var i = 0; i <= desired.length-1; ++i){
-                        var cardImage = document.createElement('IMG');                  //creates <img> tag in html
-                        cardImage.setAttribute('src', myObj.cards[desired[i]].imageUrl);  //image path
-                        cardImage.setAttribute('width', '150');
-                        //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
-                        document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
-                    }
-                }
-            };
-            xmlhttp.open("GET", "cards.json", true);
-            xmlhttp.send();
+        db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {  //gets the document corresponding to users uid
+            desired = snapshot.data().desired;                               //gets the array in desired field    
+            parseJSON(desired);                                              //calls function to print cards from json file
         });                                               
     }
     //javascript corresponding to index of home page html file
@@ -222,7 +173,7 @@ function placeCards(){
       xmlhttp.onreadystatechange = function() {
           if (this.readyState == 4 && this.status == 200) {
               var myObj = JSON.parse(this.responseText);    //parses json file and stores it in myObj
-              for(var i = 0; i < 7986; ++i){
+              for(var i = 0; i < myObj.cards.length; ++i){
                   var cardImage = document.createElement('IMG');          //creates <img> tag in html
                   cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
                   cardImage.setAttribute('width', '150');
@@ -254,36 +205,57 @@ function cardDecide(image, i, title, des){
         document.getElementById('desOfCard').innerHTML = des;
 }
 
-//delete the images so that the website will print out the correct deck
-function deleteImages(){
-    /*var div = document.getElementById("cardImages"); //div where card images are being printed
-    var img = div.getElementsByClassName("cardImg"); //put all images in a list
-    for(var i = 0; i < img.length; ++i){
-        div.removeChild(div.childNodes[i]);         //delete images from div
-    }*/
-    $("#cardImages").empty();
-}
-
 //Deck 1
 function one(){
-    alert("Switching to deck 1");
-    placeImages("deck1");
+    $("#cardImages").empty();
+    const user = firebase.auth().currentUser;
+    var deck1;
+    db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {  //gets the document corresponding to users uid
+        deck1 = snapshot.data().deck1;                               //gets the array in deck1 field    
+        parseJSON(deck1);                                              //calls function to print cards from json file
+    }); 
 }
 
 //Deck 2
 function two(){
-    alert("Switching to deck 2");
-    placeImages("deck2");
+    $("#cardImages").empty();
+    const user = firebase.auth().currentUser;
+    var deck2;
+    db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {  //gets the document corresponding to users uid
+        deck2 = snapshot.data().deck2;                               //gets the array in deck2 field    
+        parseJSON(deck2);                                              //calls function to print cards from json file
+    });
 }
 
 //Deck 3
 function three(){
-    alert("Switching to deck 3");
-    placeImages("deck3");
+    $("#cardImages").empty();
+    const user = firebase.auth().currentUser;
+    var deck2;
+    db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {  //gets the document corresponding to users uid
+        deck2 = snapshot.data().deck2;                               //gets the array in deck2 field    
+        parseJSON(deck2);                                              //calls function to print cards from json file
+    });
 }
 
 
-
+//Parsing and printing out cards from json file
+function parseJSON(arr){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            for(var i = 0; i < arr.length; ++i){
+                var cardImage = document.createElement('IMG');                  //creates <img> tag in html
+                cardImage.setAttribute('src', myObj.cards[arr[i]].imageUrl);  //image path
+                cardImage.setAttribute('width', '150');
+                //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
+                document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
+            }
+        }
+    };
+    xmlhttp.open("GET", "cards.json", true);
+    xmlhttp.send();
+}
 
 
 
