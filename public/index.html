@@ -22,7 +22,7 @@
             <li ><a id = "desiredHRef"> <button class = "tab_btn"  onclick="TabSwitch()">Desired Cards </button></a></li>
 
                                 <!--Google login from friebase-->
-          <li id = "register"><button id = "loginBut" onclick="googleLogin()">Login With Google</button></li> 
+          <li id="register"></li>
       
       </ul>
     </nav>
@@ -40,6 +40,35 @@
       </select>
   </div>
 
+  <!-- The Modal -->
+<div id="id01" class="modal">
+    <span onclick="document.getElementById('id01').style.display='none'" 
+  class="close" title="Close Modal">&times;</span>
+  
+    <!-- Modal Content -->
+    <form class="modal-content animate" action="/action_page.php">
+  
+      <div class="container">
+        <label for="email_field"><b>Email</b></label>
+        <input type="text" placeholder="Enter Username" id="email_field" required>
+  
+        <label for="password_field"><b>Password</b></label>
+        <input type="password" placeholder="Enter Password" id="password_field" required>
+        
+        <span class="psw">Forgot <a href="#">password?</a></span>
+      </div>
+  
+      
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" onclick="signup()" class="signupbtn">Signup</button>
+        <button type="button" onclick="login()" class="loginbtn">Login</button>
+        <button type="button" onclick="googleLogin()" class="googlelogbtn">Login With Google</button>
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+  
+        
+      </div>
+    </form>
+  </div>
 
      <!-- Pop Up login screen -->
     <div id="id02" class="modal">

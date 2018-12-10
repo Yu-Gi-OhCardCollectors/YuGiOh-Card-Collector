@@ -14,16 +14,41 @@ const db = firebase.firestore();  //firestore database
 db.settings({ timestampsInSnapshots: true });
 
 firebase.auth().onAuthStateChanged(function(user) { 
-  placeCards();
-  if (user) {
-    // User is signed in.
-    document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
-    document.getElementById('loginBut').setAttribute('onclick', 'googleLogout()');  //On a click of the log out button it will call
-  } 
-  else {
-    // No user is signed in.
-  }
-});
+    placeCards();
+    var reg = document.getElementById('register');
+    if (user) {
+      // User is signed in.
+      //document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
+      //document.getElementById('loginBut').setAttribute('onclick', 'logout()');  //On a click of the log out button it will call
+      //document.getElementById('welcome').innerHTML = firebase.auth().currentUser.email;
+      document.getElementById('id01').style.display='none'
+  
+      while (reg.hasChildNodes()) {
+          reg.removeChild(reg.lastChild);
+      }
+      var node = document.createElement("BUTTON");
+      node.innerHTML = "Logout";
+      node.addEventListener ("click", function() {
+          logout();
+        });
+      
+      document.getElementById('register').appendChild(node);
+    } 
+    else {
+      // No user is signed in.
+      
+      while (reg.hasChildNodes()) {
+         reg.removeChild(reg.lastChild);
+        }
+      var node = document.createElement("BUTTON");
+      node.innerHTML = "Login";
+      //node.setAttribute('onclick', document.getElementById('id01').style.display='block');
+      node.addEventListener ("click", function() {
+          document.getElementById('id01').style.display='block'
+        });
+      reg.appendChild(node);
+    }
+  });
 
 
 
@@ -346,22 +371,54 @@ function googleLogin(){
           .catch(console.log)
 }
 
+function login(){
 
-function googleLogout(){
-  firebase.auth().signOut().then(function() { //signs user out
-      // Sign-out successful.
+    var userEmail = document.getElementById("email_field").value;
+    var userPass = document.getElementById("password_field").value;
+  
+    firebase.auth().signInWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+  
+      window.alert("Error : " + errorMessage);
+  
+      // ...
+    });
+}
 
-      //document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector`;  //After log out it will display OG greeting
-      document.getElementById('loginBut').innerHTML = "Log in with google";               //Changes the button back to user login
-      document.getElementById('loginBut').setAttribute('onclick', 'googleLogin()');       //On a click of the button calls googleLogin function
-      if(window.location.toString().includes("firebasics-99944.firebaseapp")){
-          window.location.replace("https://firebasics-99944.firebaseapp.com");
-      }
-      else if(window.location.toString().includes("localhost")){
-          window.location.replace("http://localhost:5000/");
-      }
-    }).catch(function(error) {
-      // An error happened.
+
+function logout(){
+    firebase.auth().signOut().then(function() { //signs user out
+        // Sign-out successful.
+  
+        //document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector`;  //After log out it will display OG greeting
+        //document.getElementById('loginBut').innerHTML = "Login";               //Changes the button back to user login
+        //document.getElementById('loginBut').setAttribute('onclick', 'googleLogin()');       //On a click of the button calls googleLogin function
+        if(window.location.toString().includes("firebasics-99944.firebaseapp")){
+            window.location.replace("https://firebasics-99944.firebaseapp.com");
+        }
+        else if(window.location.toString().includes("localhost")){
+            window.location.replace("http://localhost:5000/");
+        }
+      }).catch(function(error) {
+        // An error happened.
+      });
+}
+
+function signup(){
+
+    var userEmail = document.getElementById("email_field").value;
+    var userPass = document.getElementById("password_field").value;
+  
+    firebase.auth().createUserWithEmailAndPassword(userEmail, userPass).catch(function(error) {
+      // Handle Errors here.
+      var errorCode = error.code;
+      var errorMessage = error.message;
+  
+      window.alert("Error : " + errorMessage);
+  
+      // ...
     });
 }
 
