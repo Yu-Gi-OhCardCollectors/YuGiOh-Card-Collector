@@ -21,9 +21,37 @@
         		</ul>
         	</nav>
         </head>
-        <!--idk if this change will work-->
-        <!--This shit works-->
-        <!--Will display Card Images-->
+
+
+         <!-- Pop Up card screen -->
+        <div id="id02" class="modal">
+            <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+              <div class="modal-content animate"> <!--action="/action_page.php">-->
+                  <div class="container">
+                      <img id="card-select" height=440px>
+
+                      <div class="decide">
+                          <li><button onclick="addCardToTrunk()">Add to Trunk</button></li>
+                          <li><button onclick="addCardToDeck1()">Add to Deck 1</button></li>
+                          <li><button onclick="addCardToDeck2()">Add to Deck 2</button></li>
+                          <li><button onclick="addCardToDeck3()">Add to Deck 3</button></li>
+                          <li><button onclick="removeFromDesired()">Remove from Desired</button></li>
+                      </div>
+
+                      <h2>Title</h2>
+                      <body>
+                          <div id="nameOfCard">name</div>
+                        </body>
+
+                      <h2>Description</h2>
+                      <body>
+                          <div id="desOfCard">des</div>
+                      </body> 
+                  </div>
+              </div>
+        </div>
+
+
         <div id="cardImages">
             
         </div>
