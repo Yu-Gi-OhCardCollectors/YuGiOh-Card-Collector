@@ -22,7 +22,7 @@
             <li ><a id = "desiredHRef"> <button class = "tab_btn"  onclick="TabSwitch()">Desired Cards </button></a></li>
 
                                 <!--Google login from friebase-->
-          <li id = "register"><button id = "loginBut" onclick="googleLogin()"></button></li> 
+          <li id = "register"><button id = "loginBut" onclick="googleLogin()" style = >Google Login</button></li> 
       
       </ul>
     </nav>
@@ -32,7 +32,7 @@
       <input type="text" id="myInput"  placeholder="Search for cards.." title="Type in a name">
       <button id="search-input" onclick="SearchCards()"> Search </button> 
                    
-      <select id="selectCards" onchange="updateFilter()">
+      <select id="selectCards" onchange="placeCards()">
           <option value="allCards">All Cards</option>
           <option value="Monster">Monster</option>
           <option value="Spell">Spell</option>

@@ -13,8 +13,9 @@ firebase.initializeApp(config);
 const db = firebase.firestore();  //firestore database
 db.settings({ timestampsInSnapshots: true });
 
+
 firebase.auth().onAuthStateChanged(function(user) { 
-  placeCards();
+    placeCards();
   if (user) {
     // User is signed in.
     document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
@@ -234,12 +235,22 @@ function removeFromDesired(){
 
 
 
+var xmlhttp = new XMLHttpRequest();
+var myObj;
+xmlhttp.onreadystatechange = function() {
+  if (this.readyState == 4 && this.status == 200) {
+    myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
+  }
+};
+xmlhttp.open("GET", "cards.json", true);
+xmlhttp.send();	
 
-
+var totalCards = 7968;
 
 
 //javascript that corresponds to the decks.html
-function placeCards(){
+function placeCards(search){
+
     if(window.location.toString().includes("decks.html")){
         // Add activeD class to the current button (highlight it)
         var header = document.getElementById("btns");
@@ -262,8 +273,8 @@ function placeCards(){
         const user = firebase.auth().currentUser;
         var trunk;
         db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {  //gets the document corresponding to users uid
-            trunk = snapshot.data().trunk;                                   //gets the array in trunk field    
-            parseJSON(trunk);                                                //calls function to print cards from json file                        
+            trunk = snapshot.data().trunk;                                   //gets the array in trunk field
+            updateFilter(search, trunk);                                                //calls function to print cards from json file                        
         });
     }
     //javascript corresponding with the desired page 
@@ -271,28 +282,13 @@ function placeCards(){
         const user = firebase.auth().currentUser;
         var desired;
         db.collection('users').doc(`${user.uid}`).get().then((snapshot)=> {  //gets the document corresponding to users uid
-            desired = snapshot.data().desired;                               //gets the array in desired field    
-            parseJSON(desired);                                              //calls function to print cards from json file
+            desired = snapshot.data().desired;                               //gets the array in desired field
+            updateFilter(search, desired);                                              //calls function to print cards from json file
         });                                               
     }
     //javascript corresponding to index of home page html file
     else{
-      var xmlhttp = new XMLHttpRequest();
-      xmlhttp.onreadystatechange = function() {
-          if (this.readyState == 4 && this.status == 200) {
-              //var myObj = JSON.parse(this.responseText);    //parses json file and stores it in myObj
-              var card = document.getElementById('cardImages');
-              for(var i = 0; i < myObj.cards.length; ++i){
-                  var cardImage = document.createElement('IMG');          //creates <img> tag in html
-                  cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-                  cardImage.setAttribute('width', '150');
-                  cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
-                  card.appendChild(cardImage); //puts <img with path> into the ID with cardImages
-              }
-          }
-      };
-      xmlhttp.open("GET", "cards.json", true);
-      xmlhttp.send();
+      updateFilter(search);
     }
 }
 
@@ -370,21 +366,14 @@ function three(){
 
 //Parsing and printing out cards from json file
 function parseJSON(arr){
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          var card = document.getElementById('cardImages');
-            for(var i = 0; i < arr.length; ++i){
-                var cardImage = document.createElement('IMG');                  //creates <img> tag in html
-                cardImage.setAttribute('src', myObj.cards[arr[i]].imageUrl);  //image path
-                cardImage.setAttribute('width', '150');
-                cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[arr[i]].imageUrl+'",'+arr[i]+',"'+myObj.cards[arr[i]].title+'","'+myObj.cards[arr[i]].lore+'")');   //onclick function on the image
-                card.appendChild(cardImage);   //puts <img with path> into the ID with cardImages
-            }
-        }
-    };
-    xmlhttp.open("GET", "cards.json", true);
-    xmlhttp.send();
+    var card = document.getElementById('cardImages');
+    for(var i = 0; i < arr.length; ++i){
+        var cardImage = document.createElement('IMG');                  //creates <img> tag in html
+        cardImage.setAttribute('src', myObj.cards[arr[i]].imageUrl);  //image path
+        cardImage.setAttribute('width', '150');
+        cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[arr[i]].imageUrl+'",'+arr[i]+',"'+myObj.cards[arr[i]].title+'","'+myObj.cards[arr[i]].lore+'")');   //onclick function on the image
+        card.appendChild(cardImage);   //puts <img with path> into the ID with cardImages
+    }
 }
 
 
@@ -487,17 +476,6 @@ else{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 /*
 
 Filters
@@ -506,86 +484,133 @@ Filters
 */
 
 
-var xmlhttp = new XMLHttpRequest();
-var myObj;
-xmlhttp.onreadystatechange = function() {
-  if (this.readyState == 4 && this.status == 200) {
-    myObj = JSON.parse(this.responseText);	  //parses json file and stores it in myObj
-  }
-};
-xmlhttp.open("GET", "cards.json", true);
-xmlhttp.send();	
-
-
 //Updates Cards based on Search Filter and Type Filter
-function updateFilter(search) { 
-  //alert(search=="" || search==null); //Tester that returns true if the search bar is either empty or null
+function updateFilter(search, arr) { 
   var zone = document.getElementById("selectCards");
-  
+  var card = document.getElementById('cardImages');
+
   //If allCards is selected as filter
   if(zone.value == "allCards"){
-    //alert("You clicked allCards");
     $("#cardImages").empty();
-
-    if(search=="" || search==null){ //No input on search
-      for(var i = 0; i < 7986; ++i){
-        var cardImage = document.createElement('IMG');			//creates <img> tag in html
-        cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-        cardImage.setAttribute('width', '150');
-        cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
-        document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
-      }
-    }
-    else{ //Input on search
-      for(var i = 0; i < 7986; ++i){
-        var cardTitle = myObj.cards[i].title;
-        if (cardTitle.includes(search)){
-          var cardImage = document.createElement('IMG');			//creates <img> tag in html
-          cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-          cardImage.setAttribute('width', '150');
-          cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
-          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
+    
+    if(arr==null){//All Cards Page
+        if(search=="" || search==null){ //No input on search
+            for(var i = 0; i < totalCards; ++i){
+                var cardImage = document.createElement('IMG');			//creates <img> tag in html
+                cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+                cardImage.setAttribute('width', '150');
+                cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+                card.appendChild(cardImage); //puts <img with path> into the ID with cardImages
+            }
         }
-      }
+        else{ //Input on search
+            for(var i = 0; i < totalCards; ++i){
+                var cardTitle = (myObj.cards[i].title).toLowerCase();
+                if (cardTitle.includes(search)){
+                    var cardImage = document.createElement('IMG');			//creates <img> tag in html
+                    cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+                    cardImage.setAttribute('width', '150');
+                    cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+                    card.appendChild(cardImage); //puts <img with path> into the ID with cardImages
+                }
+            }
+        }
+    }
+    else//Other Tabs
+    {
+        if(search=="" || search==null){ //No input on search
+            for(var i = 0; i < arr.length; ++i){
+                var cardImage = document.createElement('IMG');                  //creates <img> tag in html
+                cardImage.setAttribute('src', myObj.cards[arr[i]].imageUrl);  //image path
+                cardImage.setAttribute('width', '150');
+                cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[arr[i]].imageUrl+'",'+arr[i]+',"'+myObj.cards[arr[i]].title+'","'+myObj.cards[arr[i]].lore+'")');   //onclick function on the image
+                card.appendChild(cardImage);   //puts <img with path> into the ID with cardImages
+            }
+        }
+        else{ //Input on search
+            for(var i = 0; i < arr.length; ++i){
+                var cardTitle = (myObj.cards[arr[i]].title).toLowerCase();
+
+                if (cardTitle.includes(search)){
+                    var cardImage = document.createElement('IMG');			//creates <img> tag in html
+                    cardImage.setAttribute('src', myObj.cards[arr[i]].imageUrl);  //image path
+                    cardImage.setAttribute('width', '150');
+                    cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+                    card.appendChild(cardImage); //puts <img with path> into the ID with cardImages
+                }
+            }
+        }
     }
   }
   //If Trap, Monster, or Spell is selected as filter
   else{ 
-    $("#cardImages").empty();
-    if(search=="" || search==null){//No input on search
-      for(var i = 0; i < 7986; ++i){
-        var cardType = myObj.cards[i].type;
-        if(cardType == zone.value){
-          var cardImage = document.createElement('IMG');			//creates <img> tag in html
-          cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-          cardImage.setAttribute('width', '150');
-          cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
-          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
+       $("#cardImages").empty();
+
+    if(arr==null){//All Cards Page
+        if(search=="" || search==null){//No input on search
+            for(var i = 0; i < totalCards; ++i){
+                var cardType = myObj.cards[i].type;
+                if(cardType == zone.value){
+                    var cardImage = document.createElement('IMG');			//creates <img> tag in html
+                    cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+                    cardImage.setAttribute('width', '150');
+                    cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+                    card.appendChild(cardImage); //puts <img with path> into the ID with cardImages
+                }
+            }
         }
-      }
-    }
-    else{ //Input on search
-      for(var i = 0; i < 7986; ++i){
-        var cardType = myObj.cards[i].type;
-        var cardTitle = myObj.cards[i].title;
-        if(cardType == zone.value && cardTitle.includes(search)){
-          var cardImage = document.createElement('IMG');			//creates <img> tag in html
-          cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
-          cardImage.setAttribute('width', '150');
-          cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
-          document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
+        else{ //Input on search
+            for(var i = 0; i < totalCards; ++i){
+                var cardType = myObj.cards[i].type;
+                var cardTitle = myObj.cards[i].title;
+                if(cardType == zone.value && cardTitle.includes(search)){
+                    var cardImage = document.createElement('IMG');			//creates <img> tag in html
+                    cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
+                    cardImage.setAttribute('width', '150');
+                    cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');	//onclick function on the image
+                    card.appendChild(cardImage); //puts <img with path> into the ID with cardImages
+                }
+            }
         }
-      }
     }
-  }
+    else//Other Tabs
+    {
+        if(search=="" || search==null){ //No input on search
+            for(var i = 0; i < arr.length; ++i){
+                var cardType = myObj.cards[arr[i]].type;
+                if(cardType == zone.value){
+                    var cardImage = document.createElement('IMG');                  //creates <img> tag in html
+                    cardImage.setAttribute('src', myObj.cards[arr[i]].imageUrl);  //image path
+                    cardImage.setAttribute('width', '150');
+                    cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[arr[i]].imageUrl+'",'+arr[i]+',"'+myObj.cards[arr[i]].title+'","'+myObj.cards[arr[i]].lore+'")');   //onclick function on the image
+                    card.appendChild(cardImage);   //puts <img with path> into the ID with cardImages
+                }
+            }
+        }
+        else{ //Input on search
+            for(var i = 0; i < arr.length; ++i){
+                var cardTitle = (myObj.cards[arr[i]].title).toLowerCase();
+                var cardType = myObj.cards[arr[i]].type;
+                if(cardType == zone.value && cardTitle.includes(search)){
+                    var cardImage = document.createElement('IMG');                  //creates <img> tag in html
+                    cardImage.setAttribute('src', myObj.cards[arr[i]].imageUrl);  //image path
+                    cardImage.setAttribute('width', '150');
+                    cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[arr[i]].imageUrl+'",'+arr[i]+',"'+myObj.cards[arr[i]].title+'","'+myObj.cards[arr[i]].lore+'")');   //onclick function on the image
+                    card.appendChild(cardImage);   //puts <img with path> into the ID with cardImages
+                }
+            }
+        }
+        }
+    }
 }
+
 
 function SearchCards(){
   var input, filter;
 
   input = document.getElementById("myInput");
-  filter = input.value;
+  filter = (input.value).toLowerCase();
   console.log(filter);
 
-  updateFilter(filter);
+  placeCards(filter);
 }
