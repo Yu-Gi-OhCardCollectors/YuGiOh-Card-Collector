@@ -18,9 +18,9 @@ firebase.auth().onAuthStateChanged(function(user) {
     var reg = document.getElementById('register');
     if (user) {
       // User is signed in.
-      //document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
-      //document.getElementById('loginBut').setAttribute('onclick', 'logout()');  //On a click of the log out button it will call
-      //document.getElementById('welcome').innerHTML = firebase.auth().currentUser.email;
+      document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
+      document.getElementById('loginBut').setAttribute('onclick', 'logout()');  //On a click of the log out button it will call
+      document.getElementById('welcome').innerHTML = firebase.auth().currentUser.email;
       document.getElementById('id01').style.display='none'
   
       while (reg.hasChildNodes()) {
@@ -42,7 +42,7 @@ firebase.auth().onAuthStateChanged(function(user) {
         }
       var node = document.createElement("BUTTON");
       node.innerHTML = "Login";
-      //node.setAttribute('onclick', document.getElementById('id01').style.display='block');
+      node.setAttribute('onclick', document.getElementById('id01').style.display='block');
       node.addEventListener ("click", function() {
           document.getElementById('id01').style.display='block'
         });
@@ -168,7 +168,7 @@ function placeCards(){
                         var cardImage = document.createElement('IMG');                  //creates <img> tag in html
                         cardImage.setAttribute('src', myObj.cards[trunk[i]].imageUrl);  //image path
                         cardImage.setAttribute('width', '150');
-                        //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
+                        cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
                         document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
                     }
                 }
@@ -209,7 +209,7 @@ function placeCards(){
                         var cardImage = document.createElement('IMG');                  //creates <img> tag in html
                         cardImage.setAttribute('src', myObj.cards[trunk[i]].imageUrl);  //image path
                         cardImage.setAttribute('width', '150');
-                        //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
+                        cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
                         document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
                     }
                 }
@@ -232,7 +232,7 @@ function placeCards(){
                         var cardImage = document.createElement('IMG');                  //creates <img> tag in html
                         cardImage.setAttribute('src', myObj.cards[desired[i]].imageUrl);  //image path
                         cardImage.setAttribute('width', '150');
-                        //cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
+                        cardImage.setAttribute('onclick', 'cardDecide("'+myObj.cards[i].imageUrl+'",'+i+',"'+myObj.cards[i].title+'","'+myObj.cards[i].lore+'")');   //onclick function on the image
                         document.getElementById('cardImages').appendChild(cardImage);   //puts <img with path> into the ID with cardImages
                     }
                 }
@@ -363,7 +363,7 @@ function googleLogin(){
           
           .then(result => {                               //this displays hello to the user who just signed in
               const user = result.user;
-              //document.getElementById('welcome').innerHTML = `Welcome ${user.displayName}`;
+              document.getElementById('welcome').innerHTML = `Welcome ${user.displayName}`;
               document.getElementById('loginBut').innerHTML = "Log out";  //This will replace the login button with a log out one
               document.getElementById('loginBut').setAttribute('onclick', 'googleLogout()');  //On a click of the log out button it will call
               newUser(user);
@@ -417,8 +417,8 @@ function signup(){
       var errorMessage = error.message;
   
       window.alert("Error : " + errorMessage);
-  
-      // ...
+        ""
+      
     });
 }
 
@@ -477,7 +477,7 @@ xmlhttp.send();
 
 //Updates Cards based on Search Filter and Type Filter
 function updateFilter(search) { 
-  //alert(search=="" || search==null); //Tester that returns true if the search bar is either empty or null
+  alert(search=="" || search==null); //Tester that returns true if the search bar is either empty or null
   var zone = document.getElementById("selectCards");
   
   //If allCards is selected as filter
