@@ -383,7 +383,7 @@ function login(){
   
       window.alert("Error : " + errorMessage);
   
-      // ...
+      // writes an error message to the user in a pop up.
     });
 }
 
@@ -402,7 +402,7 @@ function logout(){
             window.location.replace("http://localhost:5000/");
         }
       }).catch(function(error) {
-        // An error happened.
+        message.innerHTML = "Input is " + error;
       });
 }
 
@@ -417,7 +417,7 @@ function signup(){
       var errorMessage = error.message;
   
       window.alert("Error : " + errorMessage);
-        ""
+        "Sorry, this username is already taken."
       
     });
 }

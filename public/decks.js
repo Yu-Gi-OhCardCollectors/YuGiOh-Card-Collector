@@ -16,6 +16,7 @@ function deleteImages(){
 	for(var i = 0; i < img.length; ++i){
 		div.removeChild(div.childNodes[i]);			//delete images from div
 	}
+	$("#cardImages").empty();
 }
 
 
