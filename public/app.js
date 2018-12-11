@@ -382,8 +382,8 @@ function login(){
       var errorMessage = error.message;
   
       window.alert("Error : " + errorMessage);
-  
-      // writes an error message to the user in a pop up.
+        "Sorry, error in login."
+        // writes an error message to the user in a pop up.
     });
 }
 
@@ -418,7 +418,7 @@ function signup(){
   
       window.alert("Error : " + errorMessage);
         "Sorry, this username is already taken."
-      
+        // writes an error message to the user in a pop up.
     });
 }
 
