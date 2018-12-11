@@ -288,6 +288,7 @@ function placeCards(search){
     }
     //javascript corresponding to index of home page html file
     else{
+        alert(search);
       updateFilter(search);
     }
 }
@@ -562,7 +563,7 @@ function updateFilter(search, arr) {
         else{ //Input on search
             for(var i = 0; i < totalCards; ++i){
                 var cardType = myObj.cards[i].type;
-                var cardTitle = myObj.cards[i].title;
+                var cardTitle = (myObj.cards[i].title).toLowerCase();
                 if(cardType == zone.value && cardTitle.includes(search)){
                     var cardImage = document.createElement('IMG');			//creates <img> tag in html
                     cardImage.setAttribute('src', myObj.cards[i].imageUrl);  //image path
