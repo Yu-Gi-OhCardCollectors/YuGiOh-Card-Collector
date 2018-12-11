@@ -1,12 +1,12 @@
 //Places Card Images
 function placeImages(deck){   
-	//for(var i = 0; i < 1; ++i){
+	for(var i = 0; i < 1; ++i){
 		var cardImage = document.createElement('IMG');			//creates <img> tag in html
 		cardImage.setAttribute('src', 'images/'+deck+'/card0.jpg');  //image path
 		cardImage.setAttribute('class', 'cardImg');  //sets class to each image
 		cardImage.setAttribute('width', '150');
 		document.getElementById('cardImages').appendChild(cardImage); //puts <img with path> into the ID with cardImages
-	//}
+	}
 }
 
 //delete the images so that the website will print out the correct deck

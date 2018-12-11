@@ -392,9 +392,9 @@ function logout(){
     firebase.auth().signOut().then(function() { //signs user out
         // Sign-out successful.
   
-        //document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector`;  //After log out it will display OG greeting
-        //document.getElementById('loginBut').innerHTML = "Login";               //Changes the button back to user login
-        //document.getElementById('loginBut').setAttribute('onclick', 'googleLogin()');       //On a click of the button calls googleLogin function
+        document.getElementById('welcome').innerHTML = `Welcome to YuGiOh Card Collector`;  //After log out it will display OG greeting
+        document.getElementById('loginBut').innerHTML = "Login";               //Changes the button back to user login
+        document.getElementById('loginBut').setAttribute('onclick', 'googleLogin()');       //On a click of the button calls googleLogin function
         if(window.location.toString().includes("firebasics-99944.firebaseapp")){
             window.location.replace("https://firebasics-99944.firebaseapp.com");
         }
