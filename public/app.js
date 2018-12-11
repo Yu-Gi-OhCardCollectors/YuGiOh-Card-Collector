@@ -281,11 +281,11 @@ function cardDecide(image, i, title, des){
 
 //delete the images so that the website will print out the correct deck
 function deleteImages(){
-    /*var div = document.getElementById("cardImages"); //div where card images are being printed
+    var div = document.getElementById("cardImages"); //div where card images are being printed
     var img = div.getElementsByClassName("cardImg"); //put all images in a list
     for(var i = 0; i < img.length; ++i){
         div.removeChild(div.childNodes[i]);         //delete images from div
-    }*/
+    }
     $("#cardImages").empty();
 }
 
