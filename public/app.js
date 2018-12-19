@@ -176,10 +176,10 @@ function updateDB2(arr, ind, field, user){
           alert("Error occured");
       break;
     }
-    setTimeout(function () {        //reloads the page to show the card is removed
-        location.reload()
-    }, 500);
-  //}
+    $("#cardImages").empty();
+    parseJSON(arr);
+    var modal = document.getElementById('id02');
+    modal.style.display = "none";
 }
 
 
@@ -288,7 +288,6 @@ function placeCards(search){
     }
     //javascript corresponding to index of home page html file
     else{
-        alert(search);
       updateFilter(search);
     }
 }
