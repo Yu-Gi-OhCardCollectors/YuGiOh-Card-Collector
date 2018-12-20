@@ -1,14 +1,9 @@
 <!DOCTYPE html>
 <html>
-	<head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        
-    
-            <title>Yugioh Card Collector</title>
-            <link rel = "stylesheet" type = "text/css" href = "styles.css"/>
-            
-      </head>
+	<header>
+        <title>Yugioh CardCollector</title>
+        <link rel = "stylesheet" type = "text/css" href = "styles.css"/>
+    </header>
 
     <body>
         <head>
@@ -26,18 +21,6 @@
         		</ul>
         	</nav>
         </head>
-
-        <div id="search">
-            <input type="text" id="myInput"  placeholder="Search for cards.." title="Type in a name">
-            <button id="search-input" onclick="SearchCards()"> Search </button> 
-                         
-            <select id="selectCards" onchange="placeCards()">
-                <option value="allCards">All Cards</option>
-                <option value="Monster">Monster</option>
-                <option value="Spell">Spell</option>
-                <option value="Trap">Trap</option>
-            </select>
-        </div>
 
 
          <!-- Pop Up card screen -->
@@ -69,12 +52,12 @@
         </div>
 
 
-        <div id="cardImages"> 
+        <div id="cardImages">
+            
         </div>
 
 
         <script src="https://www.gstatic.com/firebasejs/5.5.9/firebase.js"></script>
-        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
         <script src="app.js"></script>
     </body>
 </html>
